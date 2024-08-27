@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Home')
-
 @section('content')
     <div style="
         max-width: 800px;
@@ -20,7 +18,6 @@
         ">
             Latest News
         </h1>
-
         <!-- Featured Article -->
         @if($posts->isNotEmpty())
             <div style="
@@ -66,33 +63,21 @@
                         {{ $posts[0]->title }}
                     </h2>
 
-                    @if($posts[0]->section)
-                        <p style="
-                            color: rgba(247, 247, 247, 0.956);
-                            font-size: 20px;
-                            font-weight: bold;
-                            margin-bottom: 12px;
-                        ">
-                            {{ Str::limit($posts[0]->section->title, 150) }}
-                        </p>
-                    @endif
-                    <!-- Added Date and Writer Information -->
                     <p style="
-                        color: rgba(255, 255, 255, 0.8);
+                        color: white;
                         margin-bottom: 8px;
                     ">
                         {{ \Carbon\Carbon::parse($posts[0]->created_at)->format('M d, Y') }} by {{ $posts[0]->writer }}
                     </p>
 
-
                     <p style="
-                        color: rgba(255, 255, 255, 0.8);
+                        color: rgba(248, 248, 248, 0.8);
                         margin-bottom: 8px;
                     ">
                         {{ Str::limit($posts[0]->content, 150) }}
                     </p>
 
-                    <a href="{{ route('posts.show', $posts[0]->id) }}" style="
+                    <a href="{{ route('UserLogin') }}" style="
                         display: inline-block;
                         padding: 12px 24px;
                         background-color: rgb(39, 39, 121);
@@ -136,6 +121,7 @@
                         margin-bottom: 16px;
                     ">
                 @endif
+
                 <h2 style="
                     font-size: 24px;
                     font-weight: bold;
@@ -143,23 +129,14 @@
                 ">
                     {{ $post->title }}
                 </h2>
-                @if($post->section)
+                
                 <p style="
-                    font-size: 20px;
-                    font-weight: bold;
-                    margin-bottom: 12px;
-                ">
-                     {{ $post->section->title }}
-                </p>
-                @endif
-                <p style="
-                    color: #718096;
+                    font-size: 18px;
+                    line-height: 1.6;
                     margin-bottom: 8px;
                 ">
                     {{ \Carbon\Carbon::parse($post->created_at)->format('M d, Y') }} by {{ $post->writer }}
                 </p>
-                
-
                 
                 <p style="
                     font-size: 18px;
@@ -168,7 +145,8 @@
                 ">
                     {{ Str::limit($post->content, 100) }}
                 </p>
-                <a href="{{ route('posts.show', ['post' => $post->id]) }}" style="
+                
+                <a href="{{ route('UserLogin') }}" style="
                     display: inline-block;
                     padding: 12px 24px;
                     background-color: rgb(39, 39, 121);
@@ -183,7 +161,6 @@
                 </a>
             </div>
         @endforeach
-
         <!-- Pagination Links -->
         {{ $posts->links() }}
     </div>

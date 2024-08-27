@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'News Website')</title>
+    <title>@yield('title', 'Admin layout')</title>
 </head>
 <body>
 
     <header>
         <nav>
-            <div class="nav-left">
-                <a href="/">Home</a>
-                <a href="{{ route('posts.index') }}">All News</a>
-                <a href="{{ route('sections.index') }}">Sections</a>
-            </div>
-            <div class="nav-right">
-                <a href="{{ route('UserLogin') }}" class="nav-button">Log In</a>
-                <a href="{{ route('UserRegister') }}" class="nav-button">Register</a>
+            <div>
+                <a href="{{ route('admin.login') }}">Admin</a>
+
             </div>
         </nav>
     </header>
@@ -73,34 +68,14 @@
         padding: 0 1rem;
     }
 
-    .nav-left a {
+    header nav a {
         color: white;
         margin-left: 1rem;
         text-decoration: none;
     }
 
-    .nav-left a:hover {
+    header nav a:hover {
         text-decoration: underline;
-    }
-
-    .nav-right {
-        margin-left: auto;
-    }
-
-    .nav-button {
-        color: white;
-        background-color: #2b6cb0; /* Button color */
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        text-align: center;
-        text-decoration: none;
-        margin-left: 1rem;
-        font-weight: bold;
-    }
-
-    .nav-button:hover {
-        background-color: #2b6cb0; /* Button hover color */
-        text-decoration: none;
     }
 
     main {
