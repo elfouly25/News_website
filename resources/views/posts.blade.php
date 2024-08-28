@@ -1,4 +1,4 @@
-@extends('admin.dashboard.dashboard-layout')
+@extends('layouts.app')
 
 @section('title', $post->title)
 

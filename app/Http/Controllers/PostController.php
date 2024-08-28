@@ -139,15 +139,5 @@ class PostController extends Controller
             $post->update(['image' => $path]);
         }
     }
+
 }
-
-//     public function destroy(Post $post)
-//     {
-//         if ($post->image) {
-//             Storage::disk('public')->delete($post->image);
-//         }
-//         $post->delete();
-
-//         return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
-//     }
-// }

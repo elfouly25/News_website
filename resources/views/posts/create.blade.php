@@ -1,130 +1,81 @@
-@extends('layouts.app')
+@extends('admin.dashboard.dashboard-layout')
 
 @section('title', 'Create Post')
 
 @section('content')
-    <div style="
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow: hidden;
-        padding: 24px;
-    ">
-        <h1 style="
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            text-align: left;
-        ">
-            Create New Post
-        </h1>
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+        <div class="bg-white shadow-sm rounded p-4 mb-4" style="max-height: 80vh; overflow-y: auto;">
+            <h1 class="mb-4">Create New Post</h1>
 
-        <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-            <!-- Title Input -->
-            <div style="margin-bottom: 16px;">
-                <label for="title" style="font-weight: bold;">Title:</label>
-                <input type="text" id="title" name="title" value="{{ old('title') }}" required style="
-                    width: 100%;
-                    padding: 8px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                ">
-                @error('title')
-                    <div style="color: red; margin-top: 4px;">{{ $message }}</div>
-                @enderror
-            </div>
-            
-            <!-- Content Input -->
-            <div style="margin-bottom: 16px;">
-                <label for="content" style="font-weight: bold;">Content:</label>
-                <textarea id="content" name="content" rows="5" required style="
-                    width: 100%;
-                    padding: 8px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                ">{{ old('content') }}</textarea>
-                @error('content')
-                    <div style="color: red; margin-top: 4px;">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- Writer Input -->
-            <div style="margin-bottom: 16px;">
-                <label for="writer" style="font-weight: bold;">Writer:</label>
-                <input type="text" id="writer" name="writer" value="{{ old('writer') }}" required style="
-                    width: 100%;
-                    padding: 8px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                ">
-                @error('writer')
-                    <div style="color: red; margin-top: 4px;">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- Section Input -->
-            <div style="margin-bottom: 16px;">
-                <label for="section_id" style="font-weight: bold;">Select or Write Section:</label>
-                <select id="section_id" name="section_id" style="
-                    width: 100%;
-                    padding: 8px;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
-                ">
-                    <option value="">-- Select a Section --</option>
-                    @foreach($sections as $section)
-                        <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>
-                            {{ $section->title }}
-                        </option>
-                    @endforeach
-                </select>
-                @error('section_id')
-                    <div style="color: red; margin-top: 4px;">{{ $message }}</div>
-                @enderror
-
-                <!-- New Section Input -->
-                <div style="margin-top: 16px;">
-                    <label for="new_section" style="font-weight: bold;">Or Write a New Section:</label>
-                    <input type="text" id="new_section" name="new_section" value="{{ old('new_section') }}" style="
-                        width: 100%;
-                        padding: 8px;
-                        border: 1px solid #ccc;
-                        border-radius: 4px;
-                    ">
-                    @error('new_section')
-                        <div style="color: red; margin-top: 4px;">{{ $message }}</div>
+                <!-- Title Input -->
+                <div class="form-group">
+                    <label for="title" class="font-weight-bold">Title:</label>
+                    <input type="text" id="title" name="title" value="{{ old('title') }}" class="form-control" required>
+                    @error('title')
+                        <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
-            </div>
 
-            <!-- Image Input -->
-            <div style="margin-bottom: 16px;">
-                <label for="image" style="font-weight: bold;">Image:</label>
-                <input type="file" id="image" name="image" accept="image/*" style="
-                    width: 100%;
-                ">
-                @error('image')
-                    <div style="color: red; margin-top: 4px;">{{ $message }}</div>
-                @enderror
-            </div>
+                <!-- Content Input -->
+                <div class="form-group">
+                    <label for="content" class="font-weight-bold">Content:</label>
+                    <textarea id="content" name="content" rows="5" class="form-control" required>{{ old('content') }}</textarea>
+                    @error('content')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
 
-            <!-- Submit Button -->
-            <button type="submit" style="
-                padding: 12px 24px;
-                background-color: rgb(39, 39, 121);
-                color: white;
-                border: none;
-                border-radius: 4px;
-                font-size: 16px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            ">
-                Create Post
-            </button>
-        </form>
+                <!-- Writer Input -->
+                <div class="form-group">
+                    <label for="writer" class="font-weight-bold">Writer:</label>
+                    <input type="text" id="writer" name="writer" value="{{ old('writer') }}" class="form-control" required>
+                    @error('writer')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Section Input -->
+                <div class="form-group">
+                    <label for="section_id" class="font-weight-bold">Select or Write Section:</label>
+                    <select id="section_id" name="section_id" class="form-control">
+                        <option value="">-- Select a Section --</option>
+                        @foreach($sections as $section)
+                            <option value="{{ $section->id }}" {{ old('section_id') == $section->id ? 'selected' : '' }}>
+                                {{ $section->title }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('section_id')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+
+                    <!-- New Section Input -->
+                    <div class="mt-3">
+                        <label for="new_section" class="font-weight-bold">Or Write a New Section:</label>
+                        <input type="text" id="new_section" name="new_section" value="{{ old('new_section') }}" class="form-control">
+                        @error('new_section')
+                            <div class="text-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Image Input -->
+                <div class="form-group">
+                    <label for="image" class="font-weight-bold">Image:</label>
+                    <input type="file" id="image" name="image" accept="image/*" class="form-control-file">
+                    @error('image')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">
+                    Create Post
+                </button>
+            </form>
+        </div>
     </div>
 @endsection

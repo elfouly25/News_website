@@ -11,7 +11,7 @@
         <nav>
             <div>
                 <a href="{{ route('admin.login') }}">Admin</a>
-
+                
             </div>
         </nav>
     </header>

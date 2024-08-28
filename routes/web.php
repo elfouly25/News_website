@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('home', ['posts' => $posts]);
 })->name('home');
 
+
+
 // Post routes
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
@@ -38,8 +40,7 @@ Route::delete('/sections/{section}', [SectionController::class, 'destroy'])->nam
 // Admins routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login');
-Route::get('/admin/login-success', [LoginController::class, 'showLoginSuccess'])->name('login.success');
-
+Route::get('/admin/dashboard', [LoginController::class, 'showLoginSuccess'])->name('login.success');
 Route::get('/password/forget', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 
 

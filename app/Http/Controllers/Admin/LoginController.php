@@ -33,6 +33,6 @@ class LoginController extends Controller
 
     public function showLoginSuccess()
     {
-        return view('admin.auth.login-success');
+        return view('admin.dashboard.dashboard');
     }
 }

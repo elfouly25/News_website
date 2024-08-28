@@ -11,8 +11,6 @@
         <nav>
             <div class="nav-left">
                 <a href="/">Home</a>
-                <a href="{{ route('posts.index') }}">All News</a>
-                <a href="{{ route('sections.index') }}">Sections</a>
             </div>
             <div class="nav-right">
                 {{-- <a href="{{ route('UserLogin') }}" class="nav-button">Log In</a> --}}
