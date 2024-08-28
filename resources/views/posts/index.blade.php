@@ -17,9 +17,6 @@
                         <p class="text-muted mb-2">
                             <small>Last updated: {{ \Carbon\Carbon::parse($post->updated_at)->format('M d, Y H:i') }} by {{ $post->writer }}</small>
                         </p>
-                        <a href="{{ route('posts.show', $post->id) }}" class="font-weight-bold text-decoration-underline" style="color: black;">
-                            Read More
-                        </a>
                     </div>
 
                     <div class="d-flex">

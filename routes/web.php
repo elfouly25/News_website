@@ -7,18 +7,10 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Models\Post;
 
-Route::get('register', function () {
-    return view('auth.user-register');
-})->name('UserRegister');
-
-
-
 Route::get('/', function () {
     $posts = Post::latest()->paginate(10);
     return view('home', ['posts' => $posts]);
 })->name('home');
-
-
 
 // Post routes
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

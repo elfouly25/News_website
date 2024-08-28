@@ -38,8 +38,8 @@
                     @endif
 
                     <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">{{ $post->title }}</h2>
-                    <p style="font-size: 18px; line-height: 1.6; margin-bottom: 8px;">{{ \Carbon\Carbon::parse($post->created_at)->format('M d, Y') }} by {{ $post->writer }}</p>
-                    <p style="font-size: 18px; line-height: 1.6; margin-bottom: 8px;">{{ Str::limit($post->content, 100) }}</p>
+                    <p style="font-size: 18px;  margin-bottom: 8px;">{{ \Carbon\Carbon::parse($post->created_at)->format('M d, Y') }} by {{ $post->writer }}</p>
+                    <p style="font-size: 18px;  margin-bottom: 8px;">{{ Str::limit($post->content, 100) }}</p>
 
                     <a href="{{ route('posts.show', $post->id) }}" style="display: inline-block; padding: 12px 24px; background-color: rgb(39, 39, 121); color: white; border-radius: 4px; text-align: center; font-weight: bold; text-decoration: none; transition: background-color 0.3s;">
                         Read more
