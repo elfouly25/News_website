@@ -1,5 +1,5 @@
 <!-- resources/views/admin/login-success.blade.php -->
-@extends('admin.layout')
+@extends('layouts.admin')
 
 @section('title', 'Login Successful')
 

@@ -1,5 +1,4 @@
-@extends('admin.layout')
-
+@extends('layouts.admin')
 @section('title', 'Login')
 
 @section('content')
@@ -24,6 +23,12 @@
                 </div>
             </div>
 
+            <!-- Forgot Password Link -->
+            <div class="form-group">
+                <a href="{{ route('password.request') }}" class="forgot-password">Forgot Password?</a>
+            </div>            
+            
+            <!-- Submit Button -->
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>

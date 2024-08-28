@@ -15,8 +15,8 @@
                 <a href="{{ route('sections.index') }}">Sections</a>
             </div>
             <div class="nav-right">
-                <a href="{{ route('UserLogin') }}" class="nav-button">Log In</a>
-                <a href="{{ route('UserRegister') }}" class="nav-button">Register</a>
+                {{-- <a href="{{ route('UserLogin') }}" class="nav-button">Log In</a> --}}
+                {{-- <a href="{{ route('UserRegister') }}" class="nav-button">Register</a> --}}
             </div>
         </nav>
     </header>

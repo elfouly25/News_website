@@ -77,7 +77,7 @@
                         {{ Str::limit($posts[0]->content, 150) }}
                     </p>
 
-                    <a href="{{ route('UserLogin') }}" style="
+                    <a href="{{ route('posts.show', $posts[0]->id) }}" style="
                         display: inline-block;
                         padding: 12px 24px;
                         background-color: rgb(39, 39, 121);
@@ -146,7 +146,7 @@
                     {{ Str::limit($post->content, 100) }}
                 </p>
                 
-                <a href="{{ route('UserLogin') }}" style="
+                <a href="{{ route('posts.show', $posts[0]->id) }}" style="
                     display: inline-block;
                     padding: 12px 24px;
                     background-color: rgb(39, 39, 121);

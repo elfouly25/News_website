@@ -1,18 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\ForgetPasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SectionController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Models\Post;
 
 Route::get('register', function () {
     return view('auth.user-register');
 })->name('UserRegister');
 
-Route::view('/user-login', 'auth.user-login')->name('UserLogin');
 
-Route::view('/forgot-password', 'auth.passwords.reset-password')->name('password.request');
 
 Route::get('/', function () {
     $posts = Post::latest()->paginate(10);
@@ -36,7 +35,12 @@ Route::get('/sections/{section}/edit', [SectionController::class, 'edit'])->name
 Route::put('/sections/{section}', [SectionController::class, 'update'])->name('sections.update');
 Route::delete('/sections/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
 
-// Admin routes
-Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
-Route::get('/admin/login-success', [AdminController::class, 'showLoginSuccess'])->name('admin.login.success');
+// Admins routes
+Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [LoginController::class, 'login'])->name('admin.login');
+Route::get('/admin/login-success', [LoginController::class, 'showLoginSuccess'])->name('login.success');
+
+Route::get('/password/forget', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+
+
+
