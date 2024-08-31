@@ -83,6 +83,11 @@
                     <li><a href="{{ route('posts.index') }}" class="text-white"><i class="fas fa-file-alt"></i> Manage Posts</a></li>
                     <li><a href="{{ route('sections.index') }}" class="text-white"><i class="fas fa-th-list"></i> Manage Sections</a></li>
                 </ul>
+                <!-- Logout Button -->
+                <form action="{{ route('admin.logout') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-block mt-3">Logout</button>
+                </form>
             </aside>
 
             <main class="col-md-9 dashboard-content">

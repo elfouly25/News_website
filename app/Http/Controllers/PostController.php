@@ -13,10 +13,26 @@ class PostController extends Controller
     // Display a listing of posts
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
+        $posts = Post::latest()->paginate(3);
         return view('posts.index', compact('posts'));
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+    
+        // Search for posts based on title, content, writer, or publication date
+        $posts = Post::where('title', 'LIKE', "%{$query}%")
+                      ->orWhere('content', 'LIKE', "%{$query}%")
+                      ->orWhereHas('section', function($q) use ($query) {
+                          $q->where('title', 'LIKE', "%{$query}%"); // Assuming 'title' is the column in sections table
+                      })
+                      ->orWhere('writer', 'LIKE', "%{$query}%")
+                      ->orWhereDate('created_at', $query) // This allows searching by exact date
+                      ->paginate(10); // Adjust pagination as needed
+    
+        return view('home', compact('posts'));
+    }
     // Show the form for creating a new post
     public function create()
     {

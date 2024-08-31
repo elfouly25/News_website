@@ -13,6 +13,7 @@ class LoginController extends Controller
     {
         return view('admin.auth.admin-login');
     }
+
     // Handle login
     public function login(Request $request)
     {
@@ -21,18 +22,21 @@ class LoginController extends Controller
             'Login_email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+
         // Attempt to log the user in
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('login.success');
+            return redirect()->route('login.success'); // Redirect to the dashboard on successful login
         }
+
         // If login failed, redirect back with an error
         return back()->withErrors([
             'Login_email' => 'The provided credentials do not match our records.',
         ]);
     }
 
+    // Show the dashboard after successful login
     public function showLoginSuccess()
     {
-        return view('admin.dashboard.dashboard');
+        return view('admin.dashboard.dashboard'); // Adjust this path as needed
     }
 }

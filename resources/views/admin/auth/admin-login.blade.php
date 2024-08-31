@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('title', 'Login')
 
 @section('content')
@@ -6,6 +7,21 @@
 
     <div class="login-container">
         <h1>Admin Login</h1>
+
+        @if(session('message'))
+            <div style="
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 1rem;
+                background-color: #d4edda;
+                border-left: 5px solid #28a745;
+                color: #155724;
+                border-radius: 4px;
+                margin-bottom: 1rem;
+            ">
+                {{ session('message') }}
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('admin.login') }}" class="login-form">
             @csrf

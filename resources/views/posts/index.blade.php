@@ -19,16 +19,61 @@
                         </p>
                     </div>
 
-                    <div class="d-flex">
-                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-info btn-md mr-2">Edit</a>
+                    <div class="d-flex justify-content-end"> <!-- Align buttons to the right -->
+                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary btn-md mr-2" style="height: 38px;">Edit</a> <!-- Blue Edit Button -->
                         <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-md">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-md" style="height: 38px;">Delete</button> <!-- Red Delete Button -->
                         </form>
                     </div>
                 </div>
             @endforeach
+
+            <!-- Pagination Links -->
+            <div class="pagination" style="margin-top: 20px; display: flex; justify-content: center; align-items: center;">
+                {{-- Previous Page Link --}}
+                @if ($posts->onFirstPage())
+                    <span style="visibility: hidden;">&laquo; Previous</span>
+                @else
+                    <a href="{{ $posts->previousPageUrl() }}" style="margin: 0 5px; font-size: 14px;">&laquo; Previous</a>
+                @endif
+
+                {{-- Page Number Links --}}
+                @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
+                    @if ($page == $posts->currentPage())
+                        <span style="margin: 0 5px; font-weight: bold;">{{ $page }}</span>
+                    @else
+                        <a href="{{ $url }}" style="margin: 0 5px; text-decoration: none; color: #3182ce;">{{ $page }}</a>
+                    @endif
+                @endforeach
+
+                {{-- Next Page Link --}}
+                @if ($posts->hasMorePages())
+                    <a href="{{ $posts->nextPageUrl() }}" style="margin: 0 5px; font-size: 14px;">Next &raquo;</a>
+                @else
+                    <span style="visibility: hidden;">Next &raquo;</span>
+                @endif
+            </div>
         </div>
     </div>
 @endsection
+
+<style>
+    .pagination a {
+        padding: 8px 12px;
+        border: 1px solid #3182ce;
+        border-radius: 4px;
+        color: #3182ce;
+        transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+        background-color: #3182ce;
+        color: white;
+    }
+
+    .pagination span {
+        padding: 8px 12px;
+    }
+</style>

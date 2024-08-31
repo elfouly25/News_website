@@ -11,7 +11,7 @@ class SectionController extends Controller
     // Display a listing of the sections
     public function index()
     {
-        $sections = Section::all();
+        $sections = Section::paginate(5); // Change to paginate
         return view('sections.index', compact('sections'));
     }
 
