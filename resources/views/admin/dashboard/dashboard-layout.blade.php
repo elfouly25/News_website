@@ -61,6 +61,7 @@
             justify-content: center; /* Center vertically */
             align-items: center; /* Center horizontally */
             height: calc(100vh - 4rem); /* Adjust height to fill the remaining space */
+            position: relative; /* Allow absolute positioning of flash message */
         }
 
         .dashboard-content h1 {
@@ -70,6 +71,16 @@
         .dashboard-content p {
             color: #6c757d; /* Lighter text for paragraphs */
         }
+
+        /* Flash message style */
+        #flash-message {
+            position: absolute; /* Position it absolutely */
+            top: 1rem; /* Distance from the top */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust to center */
+            z-index: 1000; /* Ensure it appears above other content */
+            width: 80%; /* Optional: set a width */
+        }
     </style>
 </head>
 <body>
@@ -78,8 +89,8 @@
             <aside class="col-md-3 sidebar">
                 <h2 class="text-center">Admin Menu</h2>
                 <ul class="list-unstyled">
-                    <li><a href="{{ url('/admin/users') }}" class="text-white"><i class="fas fa-users"></i> Manage Users</a></li>
-                    <li><a href="{{ url('/admin/admins') }}" class="text-white"><i class="fas fa-user-shield"></i> Manage Admins</a></li>
+                    {{-- <li><a href="{{ url('/admin/users') }}" class="text-white"><i class="fas fa-users"></i> Manage Users</a></li> --}}
+                    <li><a href="{{ route('admin.index') }}" class="text-white"><i class="fas fa-user-shield"></i> Manage SubAdmins</a></li>
                     <li><a href="{{ route('posts.index') }}" class="text-white"><i class="fas fa-file-alt"></i> Manage Posts</a></li>
                     <li><a href="{{ route('sections.index') }}" class="text-white"><i class="fas fa-th-list"></i> Manage Sections</a></li>
                 </ul>
@@ -91,9 +102,32 @@
             </aside>
 
             <main class="col-md-9 dashboard-content">
+                <!-- Flash Messages -->
+                @if(session('success'))
+                    <div id="flash-message" class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if(session('error'))
+                    <div id="flash-message" class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 @yield('content')
             </main>
         </div>
     </div>
+
+    <script>
+        // Hide flash message after 3 seconds
+        setTimeout(function() {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                flashMessage.style.display = 'none';
+            }
+        }, 3000); // 3000 milliseconds = 3 seconds
+    </script>
 </body>
 </html>
