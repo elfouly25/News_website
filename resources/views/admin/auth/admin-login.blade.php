@@ -8,7 +8,7 @@
     <div class="login-container">
         <h1>Admin Login</h1>
 
-        <form method="POST" action="{{ route('admin.login.submit') }}" class="login-form">
+        <form method="POST" action="{{ route('admin.login.submit') }}" class="login-form"> <!-- Updated action -->
             @csrf
             
             <div class="form-group">

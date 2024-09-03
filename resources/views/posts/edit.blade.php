@@ -23,7 +23,7 @@
                 <!-- Content Field -->
                 <div class="form-group">
                     <label for="content" class="font-weight-bold">Content:</label>
-                    <textarea id="content" name="content" rows="5" class="form-control" required>{{ old('content', $post->content) }}</textarea>
+                    <textarea id="content" name="content" rows="10" class="form-control" required>{{ old('content', $post->content) }}</textarea>
                     @error('content')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
@@ -82,4 +82,10 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script>
+        // Initialize CKEditor
+        CKEDITOR.replace('content'); // Replace the textarea with CKEditor
+    </script>
 @endsection

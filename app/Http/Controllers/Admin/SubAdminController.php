@@ -3,80 +3,80 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\SubAdmin; // Import the SubAdmin model
+use App\Models\Admin; // Import the Admin model
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class SubAdminController extends Controller
 {
-    // Show all sub-admins
+    // Show all admins
     public function index()
     {
-        $subAdmins = SubAdmin::all(); // Fetch all sub-admin accounts
+        $subAdmins = Admin::paginate(6);// Fetch all admin accounts (or sub-admins if you have a separate model)
         return view('admin.subAdmins.admin-index', compact('subAdmins')); // Pass the data to the view
     }
 
-    // Show the form to create a new sub-admin
+    // Show the form to create a new admin
     public function create()
     {
         return view('admin.subAdmins.create-admin'); // Create this Blade view
     }
 
-    // Store a newly created sub-admin in the database
+    // Store a newly created admin in the database
     public function store(Request $request)
     {
         // Validate the form data
         $request->validate([
-            'email' => 'required|email|unique:sub_admins,email',
+            'Login_email' => 'required|email|unique:admins,Login_email', // Changed to match the Admin model
             'password' => 'required|min:6|confirmed', // Ensure you have a password confirmation field
         ]);
 
-        // Create a new sub-admin
-        SubAdmin::create([
-            'email' => $request->email,
+        // Create a new admin
+        Admin::create([
+            'Login_email' => $request->Login_email, // Changed to match the Admin model
             'password' => Hash::make($request->password), // Hash the password
         ]);
 
-        return redirect()->route('admin.index')->with('success', 'Sub-admin account created successfully.');
+        return redirect()->route('admin.index')->with('success', 'Admin account created successfully.');
     }
 
-    // Show the form to edit a sub-admin
+    // Show the form to edit an admin
     public function edit($id)
     {
-        $subAdmin = SubAdmin::findOrFail($id); // Find the sub-admin by ID
+        $subAdmin = Admin::findOrFail($id); // Find the admin by ID
         return view('admin.subAdmins.edit-admin', compact('subAdmin')); // Pass the data to the view
     }
-
-    // Update the specified sub-admin in the database
+    
+    // Update the specified admin in the database
     public function update(Request $request, $id)
     {
-        $subAdmin = SubAdmin::findOrFail($id); // Find the sub-admin by ID
+        $admin = Admin::findOrFail($id); // Find the admin by ID
 
         // Validate the form data
         $request->validate([
-            'email' => 'required|email|unique:sub_admins,email,' . $subAdmin->id,
+            'Login_email' => 'required|email|unique:admins,Login_email,' . $admin->id, // Changed to match the Admin model
             'password' => 'nullable|min:6|confirmed', // Password is optional
         ]);
 
-        // Update the sub-admin details
-        $subAdmin->email = $request->email;
+        // Update the admin details
+        $admin->Login_email = $request->Login_email; // Changed to match the Admin model
 
         // Update password only if it's provided
         if ($request->filled('password')) {
-            $subAdmin->password = Hash::make($request->password);
+            $admin->password = Hash::make($request->password);
         }
 
-        $subAdmin->save(); // Save the changes
+        $admin->save(); // Save the changes
 
-        return redirect()->route('admin.index')->with('success', 'Sub-admin account updated successfully.');
+        return redirect()->route('admin.index')->with('success', 'Admin account updated successfully.');
     }
 
-    // Delete the specified sub-admin
+    // Delete the specified admin
     public function destroy($id)
     {
-        $subAdmin = SubAdmin::findOrFail($id); // Find the sub-admin by ID
-        $subAdmin->delete(); // Delete the sub-admin
+        $admin = Admin::findOrFail($id); // Find the admin by ID
+        $admin->delete(); // Delete the admin
 
-        return redirect()->route('admin.index')->with('success', 'Sub-admin account deleted successfully.');
+        return redirect()->route('admin.index')->with('success', 'Admin account deleted successfully.');
     }
 }

@@ -34,7 +34,7 @@
             @foreach($subAdmins as $subAdmin)
                 <tr>
                     <td>{{ $subAdmin->id }}</td>
-                    <td>{{ $subAdmin->email }}</td>
+                    <td>{{ $subAdmin->Login_email }}</td> <!-- Change to Login_email if you're using Admin model -->
                     <td>
                         <!-- Edit button linking to the edit route -->
                         <a href="{{ route('admin.edit', $subAdmin->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -49,4 +49,49 @@
             @endforeach
         </tbody>
     </table>
+
+    <!-- Pagination Links -->
+    <div class="pagination" style="margin-top: 20px; display: flex; justify-content: center; align-items: center;">
+        {{-- Previous Page Link --}}
+        @if ($subAdmins->onFirstPage())
+            <span style="visibility: hidden;">&laquo; Previous</span>
+        @else
+            <a href="{{ $subAdmins->previousPageUrl() }}" style="margin: 0 5px; font-size: 14px;">&laquo; Previous</a>
+        @endif
+
+        {{-- Page Number Links --}}
+        @foreach ($subAdmins->getUrlRange(1, $subAdmins->lastPage()) as $page => $url)
+            @if ($page == $subAdmins->currentPage())
+                <span style="margin: 0 5px; font-weight: bold;">{{ $page }}</span>
+            @else
+                <a href="{{ $url }}" style="margin: 0 5px; text-decoration: none; color: #3182ce;">{{ $page }}</a>
+            @endif
+        @endforeach
+
+        {{-- Next Page Link --}}
+        @if ($subAdmins->hasMorePages())
+            <a href="{{ $subAdmins->nextPageUrl() }}" style="margin: 0 5px; font-size: 14px;">Next &raquo;</a>
+        @else
+            <span style="visibility: hidden;">Next &raquo;</span>
+        @endif
+    </div>
 @endsection
+
+<style>
+    .pagination a {
+        padding: 8px 12px;
+        border: 1px solid #3182ce;
+        border-radius: 4px;
+        color: #3182ce;
+        transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+        background-color: #3182ce;
+        color: white;
+    }
+
+    .pagination span {
+        padding: 8px 12px;
+    }
+</style>

@@ -10,11 +10,9 @@
             <!-- Featured Article -->
             @if($posts->isNotEmpty() && $posts->currentPage() == 1)
                 <div style="margin-bottom: 24px; position: relative; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                    @if($posts[0]->image)
-                        <img src="{{ asset('storage/' . $posts[0]->image) }}" alt="{{ $posts[0]->title }}" style="width: 100%; max-width: 800px; height: auto; border-radius: 4px; margin-bottom: 16px;">
-                    @else
-                        <img src="https://via.placeholder.com/1200x600" alt="{{ $posts[0]->title }}" style="width: 100%; max-width: 800px; height: auto; border-radius: 4px; margin-bottom: 16px;">
-                    @endif
+                    <img src="{{ $posts[0]->image ? asset('storage/' . $posts[0]->image) : 'https://via.placeholder.com/1200x600' }}" 
+                         alt="{{ $posts[0]->title }}" 
+                         style="width: 100%; height: auto; border-radius: 4px; margin-bottom: 16px;">
 
                     <div style="position: absolute; inset: 0; background: linear-gradient(to top, black, transparent); padding: 16px; display: flex; flex-direction: column; justify-content: flex-end;">
                         <h2 style="font-size: 24px; font-weight: bold; color: white; margin-bottom: 8px;">{{ $posts[0]->title }}</h2>
@@ -34,11 +32,9 @@
                     @continue <!-- Skip the first post if it's already displayed as featured -->
                 @endif
                 <div style="margin-bottom: 24px; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 16px;">
-                    @if($post->image)
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="width: 100%; max-width: 400px; height: auto; border-radius: 4px; margin-bottom: 16px;">
-                    @else
-                        <img src="https://via.placeholder.com/400x200" alt="{{ $post->title }}" style="width: 100%; max-width: 400px; height: auto; border-radius: 4px; margin-bottom: 16px;">
-                    @endif
+                    <img src="{{ $post->image ? asset('storage/' . $post->image) : 'https://via.placeholder.com/400x200' }}" 
+                         alt="{{ $post->title }}" 
+                         style="width: 100%; height: auto; border-radius: 4px; margin-bottom: 16px;">
 
                     <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">{{ $post->title }}</h2>
                     <p style="font-size: 18px; margin-bottom: 8px;">{{ \Carbon\Carbon::parse($post->created_at)->format('M d, Y') }} by {{ $post->writer }}</p>
@@ -52,48 +48,14 @@
 
             <!-- Pagination Links -->
             <div class="pagination" style="margin-top: 20px; display: flex; justify-content: center; align-items: center;">
-                {{-- Previous Page Link --}}
-                @if ($posts->onFirstPage())
-                    <span style="visibility: hidden;">&laquo; Previous</span>
-                @else
-                    <a href="{{ $posts->previousPageUrl() }}" style="margin: 0 5px; font-size: 14px;">&laquo; Previous</a>
-                @endif
-
-                {{-- Page Number Links --}}
+                <a href="{{ $posts->previousPageUrl() }}" class="btn" style="margin: 0 5px; background-color: rgb(39, 39, 121); color: white; border-radius: 4px; text-align: center; font-weight: bold; text-decoration: none; transition: background-color 0.3s;" @if ($posts->onFirstPage()) style="visibility: hidden;" @endif>&laquo; Previous</a>
+                
                 @foreach ($posts->getUrlRange(1, $posts->lastPage()) as $page => $url)
-                    @if ($page == $posts->currentPage())
-                        <span style="margin: 0 5px; font-weight: bold;">{{ $page }}</span>
-                    @else
-                        <a href="{{ $url }}" style="margin: 0 5px; text-decoration: none; color: #3182ce;">{{ $page }}</a>
-                    @endif
+                    <a href="{{ $url }}" class="btn" style="margin: 0 5px; background-color: rgb(39, 39, 121); color: white; border-radius: 4px; text-align: center; font-weight: bold; text-decoration: none; transition: background-color 0.3s; @if ($page == $posts->currentPage()) font-weight: bold; @endif">{{ $page }}</a>
                 @endforeach
 
-                {{-- Next Page Link --}}
-                @if ($posts->hasMorePages())
-                    <a href="{{ $posts->nextPageUrl() }}" style="margin: 0 5px; font-size: 14px;">Next &raquo;</a>
-                @else
-                    <span style="visibility: hidden;">Next &raquo;</span>
-                @endif
+                <a href="{{ $posts->nextPageUrl() }}" class="btn" style="margin: 0 5px; background-color: rgb(39, 39, 121); color: white; border-radius: 4px; text-align: center; font-weight: bold; text-decoration: none; transition: background-color 0.3s;" @if (!$posts->hasMorePages()) style="visibility: hidden;" @endif>Next &raquo;</a>
             </div>
         </div>
     </div>
 @endsection
-
-<style>
-    .pagination a {
-        padding: 8px 12px;
-        border: 1px solid #3182ce;
-        border-radius: 4px;
-        color: #3182ce;
-        transition: background-color 0.3s;
-    }
-
-    .pagination a:hover {
-        background-color: #3182ce;
-        color: white;
-    }
-
-    .pagination span {
-        padding: 8px 12px;
-    }
-</style>

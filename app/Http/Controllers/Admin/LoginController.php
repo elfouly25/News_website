@@ -25,7 +25,7 @@ class LoginController extends Controller
         // Attempt to log the user in
         if (Auth::guard('admin')->attempt($credentials)) {
             // Flash a success message
-            $request->session()->flash('success', 'You have successfully logged in.');
+            // $request->session()->flash('success', 'You have successfully logged in.');
             return redirect()->route('login.success'); // Redirect to the dashboard on successful login
         }
     

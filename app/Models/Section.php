@@ -9,5 +9,6 @@ class Section extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title'];
+    // Specify the fillable attributes
+    protected $fillable = ['title', 'order']; // Include 'order' in the fillable array
 }

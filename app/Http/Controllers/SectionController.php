@@ -11,7 +11,7 @@ class SectionController extends Controller
     // Display a listing of the sections
     public function index()
     {
-        $sections = Section::paginate(5); // Change to paginate
+        $sections = Section::orderBy('order')->paginate(6);
         return view('sections.index', compact('sections'));
     }
 
@@ -28,10 +28,16 @@ class SectionController extends Controller
             'title' => 'required|string|max:255|unique:sections,title',
         ]);
     
-        Section::create($request->only('title'));
+        $maxOrder = Section::max('order') + 1;
+    
+        Section::create([
+            'title' => $request->title,
+            'order' => $maxOrder,
+        ]);
     
         return redirect()->route('sections.index')->with('success', 'Section created successfully.');
     }
+
     // Show the form for editing the specified section
     public function edit(Section $section)
     {
@@ -49,14 +55,23 @@ class SectionController extends Controller
     
         return redirect()->route('sections.index')->with('success', 'Section updated successfully.');
     }
-    
 
     // Remove the specified section from the database
     public function destroy(Section $section)
     {
         $section->delete();
-
         return redirect()->route('sections.index')->with('success', 'Section deleted successfully.');
     }
-}
 
+    // Reorder sections
+    public function reorder(Request $request)
+    {
+        $order = $request->input('order');
+    
+        foreach ($order as $index => $id) {
+            Section::where('id', $id)->update(['order' => $index]);
+        }
+    
+        return response()->json(['success' => true]);
+    }
+}

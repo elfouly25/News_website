@@ -7,7 +7,7 @@
         <div class="bg-white shadow-sm rounded p-4 mb-4" style="max-height: 80vh; overflow-y: auto;">
             <h1 class="mb-4">Create New Post</h1>
 
-            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data" id="postForm">
                 @csrf
 
                 <!-- Title Input -->
@@ -22,7 +22,7 @@
                 <!-- Content Input -->
                 <div class="form-group">
                     <label for="content" class="font-weight-bold">Content:</label>
-                    <textarea id="content" name="content" rows="5" class="form-control" required>{{ old('content') }}</textarea>
+                    <textarea id="content" name="content" rows="10" class="form-control" required>{{ old('content') }}</textarea>
                     @error('content')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
@@ -65,7 +65,7 @@
                 <!-- Image Input -->
                 <div class="form-group">
                     <label for="image" class="font-weight-bold">Image:</label>
-                    <input type="file" id="image" name="image" accept="image/*" class="form-control-file">
+                    <input type="file" id="image" name="image" accept="image/*" class="form-control-file" required>
                     @error('image')
                         <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
@@ -78,4 +78,37 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script>
+        // Initialize CKEditor
+        CKEDITOR.replace('content'); // Replace the textarea with CKEditor
+    </script>
+
+    <script>
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+            const imageInput = document.getElementById('image');
+            const imageError = document.getElementById('imageError');
+            const maxWidth = 5308; // Set your desired max width
+            const maxHeight = 3457; // Set your desired max height
+
+            // Clear previous error messages
+            imageError.style.display = 'none';
+            imageError.textContent = '';
+
+            if (imageInput.files.length > 0) {
+                const file = imageInput.files[0];
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+
+                img.onload = function() {
+                    if (img.width > maxWidth || img.height > maxHeight) {
+                        event.preventDefault(); // Prevent form submission
+                        imageError.textContent = `Image dimensions must be less than ${maxWidth}x${maxHeight} pixels.`;
+                        imageError.style.display = 'block';
+                    }
+                };
+            }
+        });
+    </script>
 @endsection

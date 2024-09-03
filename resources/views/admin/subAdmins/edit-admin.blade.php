@@ -10,9 +10,9 @@
         @method('PUT')
 
         <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ $subAdmin->email }}" required>
-            @error('email')
+            <label for="Login_email">Email</label>
+            <input type="email" id="Login_email" name="Login_email" class="form-control" value="{{ $subAdmin->Login_email }}" required>
+            @error('Login_email')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>

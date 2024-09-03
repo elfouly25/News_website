@@ -8,12 +8,17 @@ use App\Http\Controllers\SectionController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\LogoutController;
 use App\Models\Post;
+use App\Http\Controllers\HomeController;
 
 // Home route
-Route::get('/', function () {
-    $posts = Post::paginate(2);
-    return view('home', ['posts' => $posts]);
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Search route
+Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
+Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.show');
+
+// Route to display posts by section
+Route::get('/posts/section/{id}', [PostController::class, 'indexBySection'])->name('posts.bySection');
 
 // Admin routes
 Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
@@ -31,13 +36,12 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/sections/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
     Route::put('/sections/{section}', [SectionController::class, 'update'])->name('sections.update');
     Route::delete('/sections/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
-    
-    // Post routes
+    // Route for reordering sections
+    Route::post('/sections/reorder', [SectionController::class, 'reorder'])->name('sections.reorder');
+    // Route for displaying all posts
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
-    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
@@ -46,7 +50,6 @@ Route::middleware(['auth:admin'])->group(function () {
 Route::get('/password/forget', [ForgetPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 
 
-// Other routes...
 
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/manage-admins', [SubAdminController::class, 'index'])->name('admin.index'); // List of admins
