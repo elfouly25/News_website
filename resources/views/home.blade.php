@@ -15,9 +15,15 @@
                          style="width: 100%; height: auto; border-radius: 4px; margin-bottom: 16px;">
 
                     <div style="position: absolute; inset: 0; background: linear-gradient(to top, black, transparent); padding: 16px; display: flex; flex-direction: column; justify-content: flex-end;">
-                        <h2 style="font-size: 24px; font-weight: bold; color: white; margin-bottom: 8px;">{{ $posts[0]->title }}</h2>
-                        <p style="color: white; margin-bottom: 8px;">{{ \Carbon\Carbon::parse($posts[0]->created_at)->format('M d, Y') }} by {{ $posts[0]->writer }}</p>
-                        <p style="color: rgba(248, 248, 248, 0.8); margin-bottom: 8px;">{{ Str::limit($posts[0]->content, 150) }}</p>
+                        <h2 style="font-size: 24px; font-weight: bold; color: white; margin-bottom: 8px; text-align: {{ is_arabic($posts[0]->title) ? 'right' : 'left' }};">
+                            {{ $posts[0]->title }}
+                        </h2>
+                        <p style="color: white; margin-bottom: 8px; text-align: {{ is_arabic($posts[0]->title) ? 'right' : 'left' }};">
+                            {{ format_date($posts[0]->created_at, is_arabic($posts[0]->title)) }}  {{ $posts[0]->writer }}
+                        </p>
+                        <p style="color: rgba(248, 248, 248, 0.8); margin-bottom: 8px; text-align: {{ is_arabic($posts[0]->title) ? 'right' : 'left' }};">
+                            {{ Str::limit($posts[0]->content, 150) }}
+                        </p>
 
                         <a href="{{ route('posts.show', $posts[0]->id) }}" style="display: inline-block; padding: 12px 24px; background-color: rgb(39, 39, 121); color: white; border-radius: 4px; text-align: center; font-weight: bold; text-decoration: none; transition: background-color 0.3s;">
                             Read more
@@ -36,9 +42,15 @@
                          alt="{{ $post->title }}" 
                          style="width: 100%; height: auto; border-radius: 4px; margin-bottom: 16px;">
 
-                    <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 8px;">{{ $post->title }}</h2>
-                    <p style="font-size: 18px; margin-bottom: 8px;">{{ \Carbon\Carbon::parse($post->created_at)->format('M d, Y') }} by {{ $post->writer }}</p>
-                    <p style="font-size: 18px; margin-bottom: 8px;">{{ Str::limit($post->content, 100) }}</p>
+                    <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 8px; text-align: {{ is_arabic($post->title) ? 'right' : 'left' }};">
+                        {{ $post->title }}
+                    </h2>
+                    <p style="font-size: 18px; margin-bottom: 8px; text-align: {{ is_arabic($post->title) ? 'right' : 'left' }};">
+                        {{ format_date($post->created_at, is_arabic($post->title)) }} {{ $post->writer }}
+                    </p>
+                    <p style="font-size: 18px; margin-bottom: 8px; text-align: {{ is_arabic($post->title) ? 'right' : 'left' }};">
+                        {{ Str::limit($post->content, 100) }}
+                    </p>
 
                     <a href="{{ route('posts.show', $post->id) }}" style="display: inline-block; padding: 12px 24px; background-color: rgb(39, 39, 121); color: white; border-radius: 4px; text-align: center; font-weight: bold; text-decoration: none; transition: background-color 0.3s;">
                         Read more
@@ -59,3 +71,14 @@
         </div>
     </div>
 @endsection
+
+<!-- Helper functions for language detection and date formatting -->
+@php
+function is_arabic($text) {
+    return preg_match('/[\x{0600}-\x{06FF}]/u', $text);
+}
+
+function format_date($date, $isArabic) {
+    return $isArabic ? \Carbon\Carbon::parse($date)->locale('ar')->translatedFormat('l, j F Y') : \Carbon\Carbon::parse($date)->format('l, F j, Y');
+}
+@endphp

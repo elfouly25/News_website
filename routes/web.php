@@ -14,7 +14,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Search route
-Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
+route::get('/search', [PostController::class, 'search'])->name('posts.search');
 Route::get('/post/{post}', [PostController::class, 'show'])->name('posts.show');
 
 // Route to display posts by section
