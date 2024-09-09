@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p class="mb-0">&copy; {{ date('Y') }} All rights reserved.</p>
+                <p class="mb-0">&copy; {{ date('Y') }} {{ __('message.All rights reserved.') }}</p>
                 <div class="social-icons mt-2">
                     <p class="mb-0">Follow us on:</p>
                     <a href="#" class="text-decoration-none mx-2" title="Facebook">

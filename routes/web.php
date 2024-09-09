@@ -9,9 +9,13 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\LogoutController;
 use App\Models\Post;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocalizationController;
 
 // Home route
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Localization Route
+Route::get('/locale/{lang}', [LocalizationController::class, 'setLocale'])->name('set.language');
 
 // Search route
 route::get('/search', [PostController::class, 'search'])->name('posts.search');

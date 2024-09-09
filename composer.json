@@ -10,6 +10,7 @@
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5"
     },
+    
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
@@ -24,6 +25,7 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
+    
     },
     "autoload-dev": {
         "psr-4": {

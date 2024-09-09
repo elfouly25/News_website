@@ -36,9 +36,17 @@ class PostController extends Controller
 
     public function indexBySection($id)
     {
+        // Retrieve all sections ordered by 'order'
         $sections = Section::orderBy('order')->get();
+        
+        // Retrieve posts for the selected section
         $posts = Post::where('section_id', $id)->paginate(10);
-        return view('posts.postsBySection', compact('sections', 'posts'));
+        
+        // Retrieve the specific section by ID
+        $section = Section::findOrFail($id); // This will throw a 404 if the section is not found
+    
+        // Pass sections, posts, and the specific section to the view
+        return view('posts.postsBySection', compact('sections', 'posts', 'section'));
     }
 
     public function create()
