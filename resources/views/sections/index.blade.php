@@ -37,6 +37,8 @@
                         <td>{{ $section->id }}</td>
                         <td>{{ $section->title }}</td>
                         <td>
+                           
+                            <a href="{{ route('sections.translate', $section->id) }}" class="btn btn-info btn-sm">translate</a>
                             <a href="{{ route('sections.edit', $section->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('sections.destroy', $section->id) }}" method="POST" style="display:inline;">
                                 @csrf

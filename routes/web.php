@@ -38,7 +38,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/sections/create', [SectionController::class, 'create'])->name('sections.create');
     Route::post('/sections', [SectionController::class, 'store'])->name('sections.store');
     Route::get('/sections/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
+    Route::get('/sections/{section}/translate', [SectionController::class, 'translate'])->name('sections.translate');
     Route::put('/sections/{section}', [SectionController::class, 'update'])->name('sections.update');
+    Route::post('/sections/{section}', [SectionController::class, 'submitTranslation'])->name('sections.translate.store');
     Route::delete('/sections/{section}', [SectionController::class, 'destroy'])->name('sections.destroy');
     // Route for reordering sections
     Route::post('/sections/reorder', [SectionController::class, 'reorder'])->name('sections.reorder');

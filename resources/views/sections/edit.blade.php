@@ -27,16 +27,6 @@
                 </div>
             </form>
 
-            <!-- Delete Section Form -->
-            <form action="{{ route('sections.destroy', $section->id) }}" method="POST" class="mt-3">
-                @csrf
-                @method('DELETE')
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-danger">
-                        Delete Section
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 @endsection

@@ -40,9 +40,9 @@
 
                 <!-- Section Field -->
                 <div class="form-group">
-                    <label for="section_id" class="font-weight-bold">Select or Write Section:</label>
+                    <label for="section_id" class="font-weight-bold">Select a Section:</label>
                     <select id="section_id" name="section_id" class="form-control">
-                        <option value="">-- Select a Section --</option>
+                        
                         @foreach($sections as $section)
                             <option value="{{ $section->id }}" {{ old('section_id', $post->section_id) == $section->id ? 'selected' : '' }}>
                                 {{ $section->title }}

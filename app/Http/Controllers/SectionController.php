@@ -27,14 +27,14 @@ class SectionController extends Controller
         $request->validate([
             'title' => 'required|string|max:255|unique:sections,title',
         ]);
-    
+
         $maxOrder = Section::max('order') + 1;
-    
+
         Section::create([
             'title' => $request->title,
             'order' => $maxOrder,
         ]);
-    
+
         return redirect()->route('sections.index')->with('success', 'Section created successfully.');
     }
 
@@ -43,6 +43,12 @@ class SectionController extends Controller
     {
         return view('sections.edit', compact('section'));
     }
+    // Show the form for editing the specified section
+    public function translate(Section $section)
+    {
+        $translations  = $section->translation;
+        return view('sections.translate', compact('section' , 'translations'));
+    }
 
     // Update the specified section in the database
     public function update(Request $request, Section $section)
@@ -50,12 +56,28 @@ class SectionController extends Controller
         $request->validate([
             'title' => 'required|string|max:255|unique:sections,title,' . $section->id,
         ]);
-    
+
         $section->update($request->only('title'));
-    
+
         return redirect()->route('sections.index')->with('success', 'Section updated successfully.');
     }
-
+    /* save translation  */
+    public  function submitTranslation(Request $request , Section $section){
+        // lang ar 
+        $request->validate(
+            [
+                "title"=>'required'
+            ]
+        ) ;
+        
+        $section->translation()->updateOrCreate([
+            'languageCode'   =>$request->languageCode,
+        ],[
+            'title'     => $request->get('title')
+        ]);
+            return redirect()->back()->with("success" , "translated successfully !");
+      
+    } 
     // Remove the specified section from the database
     public function destroy(Section $section)
     {
@@ -67,11 +89,11 @@ class SectionController extends Controller
     public function reorder(Request $request)
     {
         $order = $request->input('order');
-    
+
         foreach ($order as $index => $id) {
             Section::where('id', $id)->update(['order' => $index]);
         }
-    
+
         return response()->json(['success' => true]);
     }
 }

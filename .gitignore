@@ -1,3 +1,4 @@
+/app/Models/translations/posts_translations.php
 /.phpunit.cache
 /node_modules
 /public/build

@@ -8,12 +8,23 @@
     <div class="login-container">
         <h1>Admin Login</h1>
 
+            <!-- Display error messages if any -->
+            @if ($errors->any())
+                <div class="error-alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
         <form method="POST" action="{{ route('admin.login.submit') }}" class="login-form"> <!-- Updated action -->
             @csrf
             
             <div class="form-group">
                 <label for="Login_email">Login</label>
-                <input type="email" id="Login_email" name="Login_email" class="form-control" required>
+                <input type="email" id="Login_email" name="Login_email" class="form-control" required value="{{ old('Login_email') }}">
             </div>
             
             <div class="form-group">
